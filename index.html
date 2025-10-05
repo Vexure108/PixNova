@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 80s RETRO ARCADE 🕹️</title>
+    <style>
+        /* === 80s RETRO STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            color: #00ffff;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* === HEADER STYLES === */
+        header {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #ff00ff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff; }
+            to { box-shadow: 0 0 30px #ff00ff, 0 0 60px #00ffff; }
+        }
+
+        header h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        /* === GAME SELECTION GRID === */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 25px 15px;
+            border-radius: 15px;
+            border: 2px solid #00ffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff, #00ffff);
+            z-index: -1;
+            border-radius: 17px;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.5);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .game-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: #00ffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .game-card p {
+            color: #ff00ff;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        /* === GAME SECTIONS === */
+        .game-section {
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid #ff00ff;
+            margin-top: 20px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+        }
+
+        .game-header {
+            margin-bottom: 20px;
+        }
+
+        .game-header h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: black;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        /* === COMMON GAME ELEMENTS === */
+        .game-message {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            min-height: 2rem;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .game-message.win {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .game-message.lose {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            margin: 0 8px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+        }
+
+        .new-game-btn {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: black;
+        }
+
+        .hint-btn {
+            background: linear-gradient(45deg, #ffff00, #ffaa00);
+            color: black;
+        }
+
+        .controls button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* === HANGMAN SPECIFIC === */
+        #hangman-drawing {
+            font-family: monospace;
+            font-size: 1rem;
+            line-height: 1.2;
+            margin: 15px auto;
+            text-align: center;
+            min-height: 150px;
+            color: #00ffff;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #ff00ff;
+        }
+
+        #word-display {
+            font-size: 2rem;
+            letter-spacing: 0.4rem;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            margin: 20px 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .letter-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .letter-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .letter-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .letter-btn.correct {
+            background: #00ff00;
+            color: black;
+        }
+
+        .letter-btn.wrong {
+            background: #ff0000;
+            color: white;
+        }
+
+        /* === TIC TAC TOE SPECIFIC === */
+        .tictactoe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            width: 250px;
+            margin: 0 auto 15px auto;
+            background: #ff00ff;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .tictactoe-cell {
+            background: black;
+            color: #00ffff;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #ff00ff;
+            border-radius: 4px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .tictactoe-cell:hover {
+            background: #1a1a1a;
+        }
+
+        /* === MEMORY SPECIFIC === */
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 0 auto 15px auto;
+            max-width: 400px;
+        }
+
+        .memory-card {
+            height: 80px;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .memory-card.flipped {
+            background: black;
+            color: #00ffff;
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, #00ff00, #00cc00);
+            cursor: default;
+        }
+
+        /* === SNAKE SPECIFIC === */
+        #snake-canvas {
+            border: 3px solid #ff00ff;
+            border-radius: 10px;
+            background: #000;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .snake-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 150px;
+            margin: 10px auto;
+        }
+
+        .snake-btn {
+            padding: 8px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* === ROCK PAPER SCISSORS SPECIFIC === */
+        .rps-choices {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .rps-btn {
+            font-size: 3rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 3px solid #00ffff;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rps-btn:hover {
+            transform: scale(1.2);
+            border-color: #ff00ff;
+        }
+
+        .rps-result {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* === SIMON SPECIFIC === */
+        .simon-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-width: 200px;
+            margin: 0 auto 15px auto;
+        }
+
+        .simon-btn {
+            width: 80px;
+            height: 80px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        .simon-btn.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px white;
+        }
+
+        .simon-red { background: #ff0000; }
+        .simon-blue { background: #0000ff; }
+        .simon-green { background: #00ff00; }
+        .simon-yellow { background: #ffff00; }
+
+        /* === WHACK-A-MOLE SPECIFIC === */
+        .mole-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto 15px auto;
+        }
+
+        .mole-hole {
+            width: 80px;
+            height: 80px;
+            background: #8B4513;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #654321;
+        }
+
+        .mole {
+            width: 60px;
+            height: 60px;
+            background: #8B4513;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -60px;
+            left: 10px;
+            transition: bottom 0.3s;
+        }
+
+        .mole.up {
+            bottom: 10px;
+        }
+
+        /* === BREAKOUT SPECIFIC === */
+        #breakout-canvas {
+            border: 3px solid #ff00ff;
+            border-radius: 10px;
+            background: #000;
+            margin: 10px auto;
+            display: block;
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.5rem; }
+            .games-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .game-icon { font-size: 2rem; }
+            .game-card h3 { font-size: 0.7rem; }
+            .game-card p { font-size: 0.8rem; }
+            #word-display { font-size: 1.5rem; letter-spacing: 0.3rem; }
+            .letter-btn { width: 35px; height: 35px; font-size: 0.9rem; }
+            .tictactoe-board { width: 200px; }
+            .tictactoe-cell { height: 60px; font-size: 1.2rem; }
+            .memory-board { grid-template-columns: repeat(4, 1fr); max-width: 300px; }
+            .memory-card { height: 60px; font-size: 1.2rem; }
+            #snake-canvas, #breakout-canvas { width: 300px; height: 300px; }
+        }
+
+        /* === SCANLINES EFFECT === */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 0, 255, 0.2);
+            border-radius: 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- MAIN MENU -->
+        <div id="main-menu">
+            <header>
+                <h1>🎮 80s RETRO ARCADE 🕹️</h1>
+                <p>INSERT COIN • PRESS START • SELECT GAME</p>
+            </header>
+
+            <div class="games-grid">
+                <!-- Row 1 -->
+                <div class="game-card" onclick="showGame('hangman')">
+                    <div class="game-icon">💀</div>
+                    <h3>HANGMAN</h3>
+                    <p>Guess the word!</p>
+                </div>
+
+                <div class="game-card" onclick="showGame('tictactoe')">
+                    <div class="game-icon">⭕</div>
+                    <h3>TIC TAC TOE</h3>
+                    <p>X vs O battle!</p>
+                </div>
+
+                <div class="game-card" onclick="showGame('memory')">
+                    <div class="game-icon">🧠</div>
+                    <h3>MEMORY MATCH</h3>
+                    <p>Find all pairs!</p>
+                </div>
+
+                <div class="game-card" onclick="showGame('snake')">
+                    <div class="game-icon">🐍</div>
+                    <h3>SNAKE GAME</h3>
+                    <p>Classic arcade!</p>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="game-card" onclick="showGame('rps')">
+                    <div class="game-icon">✂️</div>
+                    <h3>ROCK PAPER SCISSORS</h3>
+                    <p>Beat the computer!</p>
+                </div>
+
+                <div class="game-card" onclick="showGame('simon')">
+                    <div class="game-icon">🔊</div>
+                    <h3>SIMON SAYS</h3>
+                    <p>Repeat the pattern!</p>
+                </div>
+
+                <div class="game-card" onclick="showGame('mole')">
+                    <div class="game-icon">🐹</div>
+                    <h3>WHACK-A-MOLE</h3>
+                    <p>Hit the moles!</p>
+                </div>
+
+                <div class="game-card" onclick="showGame('breakout')">
+                    <div class="game-icon">🏓</div>
+                    <h3>BREAKOUT</h3>
+                    <p>Break the bricks!</p>
+                </div>
+            </div>
+
+            <footer>
+                <p style="color: #ff00ff; margin-top: 30px; font-family: 'Press Start 2P', cursive; font-size: 0.7rem;">
+                    © 1984 RETRO ARCADE • HIGH SCORES: 999,999
+                </p>
+            </footer>
+        </div>
+
+        <!-- HANGMAN GAME -->
+        <div id="hangman-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>💀 HANGMAN ARCADE 💀</h2>
+                <p style="color: #ff00ff;">Guess the word before the man hangs!</p>
+            </div>
+            <pre id="hangman-drawing"></pre>
+            <div id="word-display"></div>
+            <div id="wrong-guesses">WRONG LETTERS: <span id="wrong-letters"></span></div>
+            <div class="keyboard" id="keyboard"></div>
+            <div class="game-message" id="hangman-message"></div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="hangmanNewGame()">NEW GAME</button>
+                <button class="hint-btn" onclick="hangmanGiveHint()">HINT</button>
+            </div>
+        </div>
+
+        <!-- TIC TAC TOE GAME -->
+        <div id="tictactoe-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>⭕ TIC TAC TOE ⭕</h2>
+                <p style="color: #ff00ff;">Get three in a row to win!</p>
+            </div>
+            <div class="game-stats">
+                <div>PLAYER: <span id="current-player">X</span></div>
+                <div>SCORE X: <span id="score-x">0</span></div>
+                <div>SCORE O: <span id="score-o">0</span></div>
+            </div>
+            <div class="tictactoe-board" id="tictactoe-board"></div>
+            <div class="game-message" id="tictactoe-message"></div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="tictactoeNewGame()">NEW GAME</button>
+            </div>
+        </div>
+
+        <!-- MEMORY MATCH GAME -->
+        <div id="memory-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>🧠 MEMORY MATCH 🧠</h2>
+                <p style="color: #ff00ff;">Find all matching pairs!</p>
+            </div>
+            <div class="game-stats">
+                <div>MOVES: <span id="memory-moves">0</span></div>
+                <div>TIME: <span id="memory-time">0</span>s</div>
+                <div>PAIRS: <span id="memory-pairs">0</span>/8</div>
+            </div>
+            <div class="memory-board" id="memory-board"></div>
+            <div class="game-message" id="memory-message"></div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="memoryNewGame()">NEW GAME</button>
+            </div>
+        </div>
+
+        <!-- SNAKE GAME -->
+        <div id="snake-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>🐍 SNAKE GAME 🐍</h2>
+                <p style="color: #ff00ff;">Eat food, don't hit walls!</p>
+            </div>
+            <div class="game-stats">
+                <div>SCORE: <span id="snake-score">0</span></div>
+                <div>HIGH: <span id="snake-high">0</span></div>
+                <div>LEVEL: <span id="snake-level">1</span></div>
+            </div>
+            <canvas id="snake-canvas" width="400" height="400"></canvas>
+            <div class="game-message" id="snake-message"></div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="snakeNewGame()">NEW GAME</button>
+                <button class="hint-btn" onclick="snakeTogglePause()">PAUSE</button>
+            </div>
+            <div style="color: #ff00ff; margin-top: 10px; font-size: 0.8rem;">
+                Use ARROW KEYS or WASD to move
+            </div>
+        </div>
+
+        <!-- ROCK PAPER SCISSORS GAME -->
+        <div id="rps-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>✂️ ROCK PAPER SCISSORS ✂️</h2>
+                <p style="color: #ff00ff;">Beat the computer!</p>
+            </div>
+            <div class="game-stats">
+                <div>WINS: <span id="rps-wins">0</span></div>
+                <div>LOSSES: <span id="rps-losses">0</span></div>
+                <div>TIES: <span id="rps-ties">0</span></div>
+            </div>
+            <div class="rps-choices">
+                <div class="rps-btn" onclick="rpsPlay('rock')">🪨</div>
+                <div class="rps-btn" onclick="rpsPlay('paper')">📄</div>
+                <div class="rps-btn" onclick="rpsPlay('scissors')">✂️</div>
+            </div>
+            <div class="rps-result" id="rps-result"></div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="rpsReset()">RESET SCORE</button>
+            </div>
+        </div>
+
+        <!-- SIMON SAYS GAME -->
+        <div id="simon-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>🔊 SIMON SAYS 🔊</h2>
+                <p style="color: #ff00ff;">Repeat the pattern!</p>
+            </div>
+            <div class="game-stats">
+                <div>ROUND: <span id="simon-round">1</span></div>
+                <div>SCORE: <span id="simon-score">0</span></div>
+                <div>HIGH: <span id="simon-high">0</span></div>
+            </div>
+            <div class="simon-board">
+                <div class="simon-btn simon-red" onclick="simonButtonClick(0)"></div>
+                <div class="simon-btn simon-blue" onclick="simonButtonClick(1)"></div>
+                <div class="simon-btn simon-green" onclick="simonButtonClick(2)"></div>
+                <div class="simon-btn simon-yellow" onclick="simonButtonClick(3)"></div>
+            </div>
+            <div class="game-message" id="simon-message">WATCH THE PATTERN!</div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="simonNewGame()">NEW GAME</button>
+                <button class="hint-btn" onclick="simonStartRound()">START</button>
+            </div>
+        </div>
+
+        <!-- WHACK-A-MOLE GAME -->
+        <div id="mole-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>🐹 WHACK-A-MOLE 🐹</h2>
+                <p style="color: #ff00ff;">Hit the moles for points!</p>
+            </div>
+            <div class="game-stats">
+                <div>SCORE: <span id="mole-score">0</span></div>
+                <div>TIME: <span id="mole-time">30</span>s</div>
+                <div>HIGH: <span id="mole-high">0</span></div>
+            </div>
+            <div class="mole-board" id="mole-board"></div>
+            <div class="game-message" id="mole-message">READY TO WHACK!</div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="moleNewGame()">NEW GAME</button>
+                <button class="hint-btn" onclick="moleStartGame()">START</button>
+            </div>
+        </div>
+
+        <!-- BREAKOUT GAME -->
+        <div id="breakout-game" class="game-section">
+            <button class="back-button" onclick="showMainMenu()">← BACK TO ARCADE</button>
+            <div class="game-header">
+                <h2>🏓 BREAKOUT 🏓</h2>
+                <p style="color: #ff00ff;">Break all the bricks!</p>
+            </div>
+            <div class="game-stats">
+                <div>SCORE: <span id="breakout-score">0</span></div>
+                <div>LIVES: <span id="breakout-lives">3</span></div>
+                <div>LEVEL: <span id="breakout-level">1</span></div>
+            </div>
+            <canvas id="breakout-canvas" width="400" height="400"></canvas>
+            <div class="game-message" id="breakout-message">USE ← → TO MOVE</div>
+            <div class="controls">
+                <button class="new-game-btn" onclick="breakoutNewGame()">NEW GAME</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === NAVIGATION ===
+        function showGame(gameName) {
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById(gameName + '-game').style.display = 'block';
+            
+            // Initialize the game when shown
+            if (gameName === 'hangman') hangmanInit();
+            if (gameName === 'tictactoe') tictactoeInit();
+            if (gameName === 'memory') memoryInit();
+            if (gameName === 'snake') snakeInit();
+            if (gameName === 'rps') rpsInit();
+            if (gameName === 'simon') simonInit();
+            if (gameName === 'mole') moleInit();
+            if (gameName === 'breakout') breakoutInit();
+        }
+
+        function showMainMenu() {
+            document.querySelectorAll('.game-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById('main-menu').style.display = 'block';
+        }
+
+        // === HANGMAN GAME ===
+        let hangmanCurrentWord = '';
+        let hangmanDisplayedWord = [];
+        let hangmanWrongGuesses = [];
+        const hangmanMaxWrong = 6;
+        let hangmanGameOver = false;
+
+        const hangmanWordBank = [
+            'ARCADE', 'RETRO', 'GAMER', 'JOYSTICK', 'COIN', 
+            'HIGHSCORE', 'PIXEL', 'NINTENDO', 'PLAYER', 'SCORE',
+            'GAMEBOY', 'PACMAN', 'DONKEY', 'KONG', 'MARIO'
+        ];
+
+        const hangmanStages = [
+            `  -----
+  |   |
+      |
+      |
+      |
+      |
+      |
+---------`,
+            `  -----
+  |   |
+  O   |
+      |
+      |
+      |
+      |
+---------`,
+            `  -----
+  |   |
+  O   |
+  |   |
+      |
+      |
+      |
+---------`,
+            `  -----
+  |   |
+  O   |
+ /|   |
+      |
+      |
+      |
+---------`,
+            `  -----
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+      |
+---------`,
+            `  -----
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+      |
+---------`,
+            `  -----
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+      |
+---------`
+        ];
+
+        function hangmanInit() {
+            hangmanCurrentWord = hangmanWordBank[Math.floor(Math.random() * hangmanWordBank.length)];
+            hangmanDisplayedWord = Array(hangmanCurrentWord.length).fill('_');
+            hangmanWrongGuesses = [];
+            hangmanGameOver = false;
+            
+            document.getElementById('hangman-message').textContent = '';
+            document.getElementById('hangman-message').className = 'game-message';
+            hangmanUpdateDisplay();
+            hangmanGenerateKeyboard();
+            hangmanUpdateDrawing();
+        }
+
+        function hangmanUpdateDisplay() {
+            document.getElementById('word-display').textContent = hangmanDisplayedWord.join(' ');
+            document.getElementById('wrong-letters').textContent = hangmanWrongGuesses.join(', ');
+        }
+
+        function hangmanGenerateKeyboard() {
+            const keyboard = document.getElementById('keyboard');
+            keyboard.innerHTML = '';
+            
+            for (let i = 65; i <= 90; i++) {
+                const letter = String.fromCharCode(i);
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.className = 'letter-btn';
+                button.onclick = () => hangmanHandleGuess(letter);
+                keyboard.appendChild(button);
+            }
+        }
+
+        function hangmanHandleGuess(letter) {
+            if (hangmanGameOver) return;
+            
+            const button = [...document.getElementById('keyboard').children].find(btn => btn.textContent === letter);
+            if (button.disabled) return;
+            
+            button.disabled = true;
+            
+            if (hangmanCurrentWord.includes(letter)) {
+                button.className = 'letter-btn correct';
+                for (let i = 0; i < hangmanCurrentWord.length; i++) {
+                    if (hangmanCurrentWord[i] === letter) {
+                        hangmanDisplayedWord[i] = letter;
+                    }
+                }
+            } else {
+                button.className = 'letter-btn wrong';
+                hangmanWrongGuesses.push(letter);
+            }
+            
+            hangmanUpdateDisplay();
+            hangmanUpdateDrawing();
+            hangmanCheckGameState();
+        }
+
+        function hangmanUpdateDrawing() {
+            document.getElementById('hangman-drawing').textContent = hangmanStages[hangmanWrongGuesses.length];
+        }
+
+        function hangmanCheckGameState() {
+            if (!hangmanDisplayedWord.includes('_')) {
+                hangmanGameOver = true;
+                document.getElementById('hangman-message').textContent = 'YOU WIN! 🎉 HIGH SCORE!';
+                document.getElementById('hangman-message').className = 'game-message win';
+                hangmanDisableAllButtons();
+            } else if (hangmanWrongGuesses.length >= hangmanMaxWrong) {
+                hangmanGameOver = true;
+                document.getElementById('hangman-message').textContent = `GAME OVER! WORD: ${hangmanCurrentWord}`;
+                document.getElementById('hangman-message').className = 'game-message lose';
+                hangmanDisableAllButtons();
+                hangmanDisplayedWord = hangmanCurrentWord.split('');
+                hangmanUpdateDisplay();
+            }
+        }
+
+        function hangmanDisableAllButtons() {
+            const buttons = document.getElementById('keyboard').getElementsByClassName('letter-btn');
+            for (let button of buttons) {
+                button.disabled = true;
+            }
+        }
+
+        function hangmanGiveHint() {
+            if (hangmanGameOver) return;
+            
+            const hiddenIndices = [];
+            for (let i = 0; i < hangmanDisplayedWord.length; i++) {
+                if (hangmanDisplayedWord[i] === '_') {
+                    hiddenIndices.push(i);
+                }
+            }
+            
+            if (hiddenIndices.length > 0) {
+                const randomIndex = hiddenIndices[Math.floor(Math.random() * hiddenIndices.length)];
+                const hintLetter = hangmanCurrentWord[randomIndex];
+                
+                for (let i = 0; i < hangmanCurrentWord.length; i++) {
+                    if (hangmanCurrentWord[i] === hintLetter) {
+                        hangmanDisplayedWord[i] = hintLetter;
+                    }
+                }
+                
+                const button = [...document.getElementById('keyboard').children].find(btn => btn.textContent === hintLetter);
+                if (button && !button.disabled) {
+                    button.disabled = true;
+                    button.className = 'letter-btn correct';
+                }
+                
+                hangmanUpdateDisplay();
+                hangmanCheckGameState();
+            }
+        }
+
+        function hangmanNewGame() {
+            hangmanInit();
+        }
+
+        // Keyboard support for Hangman
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('hangman-game').style.display === 'block') {
+                const key = e.key.toUpperCase();
+                if (key >= 'A' && key <= 'Z') {
+                    hangmanHandleGuess(key);
+                }
+            }
+        });
+
+        // === TIC TAC TOE GAME ===
+        let tictactoeBoard = ['', '', '', '', '', '', '', '', ''];
+        let tictactoeCurrentPlayer = 'X';
+        let tictactoeGameActive = true;
+        let tictactoeScores = { X: 0, O: 0 };
+
+        function tictactoeInit() {
+            tictactoeBoard = ['', '', '', '', '', '', '', '', ''];
+            tictactoeCurrentPlayer = 'X';
+            tictactoeGameActive = true;
+            
+            document.getElementById('tictactoe-message').textContent = '';
+            document.getElementById('current-player').textContent = 'X';
+            document.getElementById('current-player').style.color = '#ff00ff';
+            tictactoeUpdateScores();
+            tictactoeRenderBoard();
+        }
+
+        function tictactoeRenderBoard() {
+            const board = document.getElementById('tictactoe-board');
+            board.innerHTML = '';
+            
+            tictactoeBoard.forEach((cell, index) => {
+                const cellElement = document.createElement('div');
+                cellElement.className = 'tictactoe-cell';
+                cellElement.textContent = cell;
+                cellElement.onclick = () => tictactoeHandleMove(index);
+                board.appendChild(cellElement);
+            });
+        }
+
+        function tictactoeHandleMove(index) {
+            if (!tictactoeGameActive || tictactoeBoard[index] !== '') return;
+            
+            tictactoeBoard[index] = tictactoeCurrentPlayer;
+            tictactoeRenderBoard();
+            
+            if (tictactoeCheckWin()) {
+                tictactoeScores[tictactoeCurrentPlayer]++;
+                document.getElementById('tictactoe-message').textContent = `PLAYER ${tictactoeCurrentPlayer} WINS! 🎉`;
+                document.getElementById('tictactoe-message').className = 'game-message win';
+                tictactoeGameActive = false;
+                tictactoeUpdateScores();
+            } else if (tictactoeBoard.every(cell => cell !== '')) {
+                document.getElementById('tictactoe-message').textContent = "IT'S A DRAW! 🤝";
+                document.getElementById('tictactoe-message').className = 'game-message';
+                tictactoeGameActive = false;
+            } else {
+                tictactoeCurrentPlayer = tictactoeCurrentPlayer === 'X' ? 'O' : 'X';
+                document.getElementById('current-player').textContent = tictactoeCurrentPlayer;
+                document.getElementById('current-player').style.color = tictactoeCurrentPlayer === 'X' ? '#ff00ff' : '#00ffff';
+            }
+        }
+
+        function tictactoeCheckWin() {
+            const winPatterns = [
+                [0,1,2], [3,4,5], [6,7,8], // rows
+                [0,3,6], [1,4,7], [2,5,8], // columns
+                [0,4,8], [2,4,6] // diagonals
+            ];
+            
+            return winPatterns.some(pattern => {
+                const [a,b,c] = pattern;
+                return tictactoeBoard[a] !== '' && tictactoeBoard[a] === tictactoeBoard[b] && tictactoeBoard[a] === tictactoeBoard[c];
+            });
+        }
+
+        function tictactoeUpdateScores() {
+            document.getElementById('score-x').textContent = tictactoeScores.X;
+            document.getElementById('score-o').textContent = tictactoeScores.O;
+        }
+
+        function tictactoeNewGame() {
+            tictactoeInit();
+        }
+
+        // === MEMORY MATCH GAME ===
+        let memoryCards = [];
+        let memoryFlippedCards = [];
+        let memoryMatchedPairs = 0;
+        let memoryMoves = 0;
+        let memoryGameActive = false;
+        let memoryTimer = 0;
+        let memoryTimerInterval;
+
+        const memoryEmojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'];
+
+        function memoryInit() {
+            clearInterval(memoryTimerInterval);
+            
+            memoryFlippedCards = [];
+            memoryMatchedPairs = 0;
+            memoryMoves = 0;
+            memoryTimer = 0;
+            memoryGameActive = true;
+            
+            document.getElementById('memory-moves').textContent = memoryMoves;
+            document.getElementById('memory-time').textContent = memoryTimer;
+            document.getElementById('memory-pairs').textContent = `${memoryMatchedPairs}/8`;
+            document.getElementById('memory-message').textContent = '';
+            
+            memoryCreateCards();
+            memoryRenderBoard();
+            memoryStartTimer();
+        }
+
+        function memoryCreateCards() {
+            const cardSet = [...memoryEmojis, ...memoryEmojis]
+                .sort(() => Math.random() - 0.5)
+                .map((emoji, index) => ({
+                    id: index,
+                    emoji: emoji,
+                    flipped: false,
+                    matched: false
+                }));
+            
+            memoryCards = cardSet;
+        }
+
+        function memoryRenderBoard() {
+            const board = document.getElementById('memory-board');
+            board.innerHTML = '';
+            
+            memoryCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = `memory-card ${card.flipped ? 'flipped' : ''} ${card.matched ? 'matched' : ''}`;
+                cardElement.textContent = card.flipped || card.matched ? card.emoji : '?';
+                cardElement.onclick = () => memoryFlipCard(card.id);
+                board.appendChild(cardElement);
+            });
+        }
+
+        function memoryFlipCard(cardId) {
+            if (!memoryGameActive || memoryFlippedCards.length >= 2) return;
+            
+            const card = memoryCards[cardId];
+            if (card.flipped || card.matched) return;
+            
+            card.flipped = true;
+            memoryFlippedCards.push(cardId);
+            memoryRenderBoard();
+            
+            if (memoryFlippedCards.length === 2) {
+                memoryMoves++;
+                document.getElementById('memory-moves').textContent = memoryMoves;
+                
+                setTimeout(memoryCheckMatch, 500);
+            }
+        }
+
+        function memoryCheckMatch() {
+            const [firstId, secondId] = memoryFlippedCards;
+            const firstCard = memoryCards[firstId];
+            const secondCard = memoryCards[secondId];
+            
+            if (firstCard.emoji === secondCard.emoji) {
+                firstCard.matched = true;
+                secondCard.matched = true;
+                memoryMatchedPairs++;
+                
+                document.getElementById('memory-pairs').textContent = `${memoryMatchedPairs}/8`;
+                
+                if (memoryMatchedPairs === 8) {
+                    memoryEndGame();
+                }
+            } else {
+                firstCard.flipped = false;
+                secondCard.flipped = false;
+            }
+            
+            memoryFlippedCards = [];
+            memoryRenderBoard();
+        }
+
+        function memoryStartTimer() {
+            memoryTimerInterval = setInterval(() => {
+                memoryTimer++;
+                document.getElementById('memory-time').textContent = memoryTimer;
+            }, 1000);
+        }
+
+        function memoryEndGame() {
+            memoryGameActive = false;
+            clearInterval(memoryTimerInterval);
+            
+            document.getElementById('memory-message').textContent = `YOU WIN! 🎉 Time: ${memoryTimer}s, Moves: ${memoryMoves}`;
+            document.getElementById('memory-message').className = 'game-message win';
+        }
+
+        function memoryNewGame() {
+            memoryInit();
+        }
+
+        // === SNAKE GAME ===
+        const snakeCanvas = document.getElementById('snake-canvas');
+        const snakeCtx = snakeCanvas.getContext('2d');
+        const snakeGridSize = 20;
+        const snakeTileCount = snakeCanvas.width / snakeGridSize;
+
+        let snake = [];
+        let snakeFood = {};
+        let snakeDx = 0;
+        let snakeDy = 0;
+        let snakeScore = 0;
+        let snakeHighScore = localStorage.getItem('snakeHighScore') || 0;
+        let snakeGameRunning = false;
+        let snakeGameLoop;
+        let snakeLevel = 1;
+        let snakeSpeed = 150;
+
+        function snakeInit() {
+            snake = [{ x: 10, y: 10 }];
+            snakeDx = 0;
+            snakeDy = 0;
+            snakeScore = 0;
+            snakeLevel = 1;
+            snakeSpeed = 150;
+            
+            snakeCreateFood();
+            snakeUpdateScores();
+            document.getElementById('snake-message').textContent = 'PRESS START!';
+            snakeDrawGame();
+        }
+
+        function snakeCreateFood() {
+            snakeFood = {
+                x: Math.floor(Math.random() * snakeTileCount),
+                y: Math.floor(Math.random() * snakeTileCount)
+            };
+        }
+
+        function snakeUpdateScores() {
+            document.getElementById('snake-score').textContent = snakeScore;
+            document.getElementById('snake-high').textContent = snakeHighScore;
+            document.getElementById('snake-level').textContent = snakeLevel;
+        }
+
+        function snakeDrawGame() {
+            snakeCtx.fillStyle = '#000';
+            snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+            
+            // Draw snake
+            snake.forEach((segment, index) => {
+                snakeCtx.fillStyle = index === 0 ? '#00ff00' : '#00cc00';
+                snakeCtx.fillRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize - 2, snakeGridSize - 2);
+            });
+            
+            // Draw food
+            snakeCtx.fillStyle = '#ff0000';
+            snakeCtx.fillRect(snakeFood.x * snakeGridSize, snakeFood.y * snakeGridSize, snakeGridSize - 2, snakeGridSize - 2);
+        }
+
+        function snakeUpdateGame() {
+            if (!snakeGameRunning) return;
+            
+            const head = { x: snake[0].x + snakeDx, y: snake[0].y + snakeDy };
+            
+            // Wall collision
+            if (head.x < 0 || head.x >= snakeTileCount || head.y < 0 || head.y >= snakeTileCount) {
+                snakeGameOver();
+                return;
+            }
+            
+            // Self collision
+            for (let segment of snake) {
+                if (head.x === segment.x && head.y === segment.y) {
+                    snakeGameOver();
+                    return;
+                }
+            }
+            
+            snake.unshift(head);
+            
+            // Food collision
+            if (head.x === snakeFood.x && head.y === snakeFood.y) {
+                snakeScore += 10;
+                
+                if (snakeScore >= snakeLevel * 50) {
+                    snakeLevel++;
+                    snakeSpeed = Math.max(50, snakeSpeed - 10);
+                    clearInterval(snakeGameLoop);
+                    snakeGameLoop = setInterval(snakeUpdateGame, snakeSpeed);
+                }
+                
+                if (snakeScore > snakeHighScore) {
+                    snakeHighScore = snakeScore;
+                    localStorage.setItem('snakeHighScore', snakeHighScore);
+                }
+                
+                snakeUpdateScores();
+                snakeCreateFood();
+            } else {
+                snake.pop();
+            }
+            
+            snakeDrawGame();
+        }
+
+        function snakeGameOver() {
+            snakeGameRunning = false;
+            clearInterval(snakeGameLoop);
+            document.getElementById('snake-message').textContent = 'GAME OVER! PRESS NEW GAME';
+            document.getElementById('snake-message').className = 'game-message lose';
+        }
+
+        function snakeNewGame() {
+            snakeInit();
+            snakeGameRunning = true;
+            clearInterval(snakeGameLoop);
+            snakeGameLoop = setInterval(snakeUpdateGame, snakeSpeed);
+            document.getElementById('snake-message').textContent = '';
+        }
+
+        function snakeTogglePause() {
+            if (snakeGameRunning) {
+                snakeGameRunning = false;
+                document.getElementById('snake-message').textContent = 'PAUSED';
+            } else {
+                snakeGameRunning = true;
+                document.getElementById('snake-message').textContent = '';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('snake-game').style.display === 'block') {
+                switch(e.key) {
+                    case 'ArrowUp': case 'w': if (snakeDy !== 1) { snakeDx = 0; snakeDy = -1; } break;
+                    case 'ArrowDown': case 's': if (snakeDy !== -1) { snakeDx = 0; snakeDy = 1; } break;
+                    case 'ArrowLeft': case 'a': if (snakeDx !== 1) { snakeDx = -1; snakeDy = 0; } break;
+                    case 'ArrowRight': case 'd': if (snakeDx !== -1) { snakeDx = 1; snakeDy = 0; } break;
+                }
+            }
+        });
+
+        // === ROCK PAPER SCISSORS GAME ===
+        let rpsScores = { wins: 0, losses: 0, ties: 0 };
+
+        function rpsInit() {
+            rpsUpdateScores();
+            document.getElementById('rps-result').textContent = 'CHOOSE YOUR WEAPON!';
+        }
+
+        function rpsPlay(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            
+            let result = '';
+            if (playerChoice === computerChoice) {
+                result = "IT'S A TIE!";
+                rpsScores.ties++;
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = "YOU WIN! 🎉";
+                rpsScores.wins++;
+            } else {
+                result = "COMPUTER WINS! 💻";
+                rpsScores.losses++;
+            }
+            
+            document.getElementById('rps-result').textContent = 
+                `YOU: ${playerChoice.toUpperCase()} vs COMPUTER: ${computerChoice.toUpperCase()} - ${result}`;
+            rpsUpdateScores();
+        }
+
+        function rpsUpdateScores() {
+            document.getElementById('rps-wins').textContent = rpsScores.wins;
+            document.getElementById('rps-losses').textContent = rpsScores.losses;
+            document.getElementById('rps-ties').textContent = rpsScores.ties;
+        }
+
+        function rpsReset() {
+            rpsScores = { wins: 0, losses: 0, ties: 0 };
+            rpsUpdateScores();
+            document.getElementById('rps-result').textContent = 'SCORE RESET! CHOOSE AGAIN!';
+        }
+
+        // === SIMON SAYS GAME ===
+        let simonSequence = [];
+        let simonPlayerSequence = [];
+        let simonRound = 1;
+        let simonScore = 0;
+        let simonHighScore = 0;
+        let simonGameActive = false;
+
+        function simonInit() {
+            simonSequence = [];
+            simonPlayerSequence = [];
+            simonRound = 1;
+            simonScore = 0;
+            document.getElementById('simon-round').textContent = simonRound;
+            document.getElementById('simon-score').textContent = simonScore;
+            document.getElementById('simon-high').textContent = simonHighScore;
+            document.getElementById('simon-message').textContent = 'PRESS START!';
+        }
+
+        function simonNewGame() {
+            simonInit();
+            simonGameActive = true;
+            simonAddToSequence();
+            setTimeout(() => simonStartRound(), 1000);
+        }
+
+        function simonAddToSequence() {
+            simonSequence.push(Math.floor(Math.random() * 4));
+        }
+
+        function simonStartRound() {
+            document.getElementById('simon-message').textContent = 'WATCH CAREFULLY!';
+            simonPlayerSequence = [];
+            let i = 0;
+            
+            const interval = setInterval(() => {
+                simonLightButton(simonSequence[i]);
+                i++;
+                if (i >= simonSequence.length) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('simon-message').textContent = 'YOUR TURN!';
+                    }, 500);
+                }
+            }, 800);
+        }
+
+        function simonLightButton(index) {
+            const buttons = document.querySelectorAll('.simon-btn');
+            buttons[index].classList.add('active');
+            setTimeout(() => {
+                buttons[index].classList.remove('active');
+            }, 400);
+        }
+
+        function simonButtonClick(index) {
+            if (!simonGameActive) return;
+            
+            simonLightButton(index);
+            simonPlayerSequence.push(index);
+            
+            // Check if player's sequence matches
+            for (let i = 0; i < simonPlayerSequence.length; i++) {
+                if (simonPlayerSequence[i] !== simonSequence[i]) {
+                    simonGameOver();
+                    return;
+                }
+            }
+            
+            // If sequence complete
+            if (simonPlayerSequence.length === simonSequence.length) {
+                simonScore += simonRound * 10;
+                simonRound++;
+                document.getElementById('simon-round').textContent = simonRound;
+                document.getElementById('simon-score').textContent = simonScore;
+                
+                if (simonScore > simonHighScore) {
+                    simonHighScore = simonScore;
+                    document.getElementById('simon-high').textContent = simonHighScore;
+                }
+                
+                document.getElementById('simon-message').textContent = 'GREAT! NEXT ROUND...';
+                setTimeout(() => {
+                    simonAddToSequence();
+                    simonStartRound();
+                }, 1000);
+            }
+        }
+
+        function simonGameOver() {
+            simonGameActive = false;
+            document.getElementById('simon-message').textContent = 'GAME OVER! PRESS NEW GAME';
+            document.getElementById('simon-message').className = 'game-message lose';
+        }
+
+        // === WHACK-A-MOLE GAME ===
+        let moleScore = 0;
+        let moleHighScore = 0;
+        let moleTimeLeft = 30;
+        let moleGameActive = false;
+        let moleGameInterval;
+        let moleTimerInterval;
+
+        function moleInit() {
+            moleScore = 0;
+            moleTimeLeft = 30;
+            document.getElementById('mole-score').textContent = moleScore;
+            document.getElementById('mole-time').textContent = moleTimeLeft;
+            document.getElementById('mole-high').textContent = moleHighScore;
+            document.getElementById('mole-message').textContent = 'PRESS START!';
+            moleCreateBoard();
+        }
+
+        function moleCreateBoard() {
+            const board = document.getElementById('mole-board');
+            board.innerHTML = '';
+            
+            for (let i = 0; i < 9; i++) {
+                const hole = document.createElement('div');
+                hole.className = 'mole-hole';
+                hole.innerHTML = '<div class="mole"></div>';
+                hole.onclick = () => moleWhack(i);
+                board.appendChild(hole);
+            }
+        }
+
+        function moleStartGame() {
+            if (moleGameActive) return;
+            
+            moleGameActive = true;
+            moleScore = 0;
+            moleTimeLeft = 30;
+            document.getElementById('mole-score').textContent = moleScore;
+            document.getElementById('mole-time').textContent = moleTimeLeft;
+            document.getElementById('mole-message').textContent = 'WHACK THOSE MOLES!';
+            
+            // Game timer
+            moleTimerInterval = setInterval(() => {
+                moleTimeLeft--;
+                document.getElementById('mole-time').textContent = moleTimeLeft;
+                
+                if (moleTimeLeft <= 0) {
+                    moleEndGame();
+                }
+            }, 1000);
+            
+            // Mole popping
+            moleGameInterval = setInterval(() => {
+                molePopRandomMole();
+            }, 800);
+        }
+
+        function molePopRandomMole() {
+            const holes = document.querySelectorAll('.mole-hole');
+            const randomHole = holes[Math.floor(Math.random() * holes.length)];
+            const mole = randomHole.querySelector('.mole');
+            
+            mole.classList.add('up');
+            setTimeout(() => {
+                mole.classList.remove('up');
+            }, 600);
+        }
+
+        function moleWhack(holeIndex) {
+            if (!moleGameActive) return;
+            
+            const holes = document.querySelectorAll('.mole-hole');
+            const mole = holes[holeIndex].querySelector('.mole');
+            
+            if (mole.classList.contains('up')) {
+                mole.classList.remove('up');
+                moleScore += 10;
+                document.getElementById('mole-score').textContent = moleScore;
+                
+                if (moleScore > moleHighScore) {
+                    moleHighScore = moleScore;
+                    document.getElementById('mole-high').textContent = moleHighScore;
+                }
+            }
+        }
+
+        function moleEndGame() {
+            moleGameActive = false;
+            clearInterval(moleTimerInterval);
+            clearInterval(moleGameInterval);
+            document.getElementById('mole-message').textContent = `TIME'S UP! FINAL SCORE: ${moleScore}`;
+            document.getElementById('mole-message').className = 'game-message';
+        }
+
+        function moleNewGame() {
+            moleInit();
+        }
+
+        // === BREAKOUT GAME ===
+        const breakoutCanvas = document.getElementById('breakout-canvas');
+        const breakoutCtx = breakoutCanvas.getContext('2d');
+
+        let breakoutBallX = breakoutCanvas.width / 2;
+        let breakoutBallY = breakoutCanvas.height - 30;
+        let breakoutBallDX = 4;
+        let breakoutBallDY = -4;
+        let breakoutPaddleWidth = 75;
+        let breakoutPaddleX = (breakoutCanvas.width - breakoutPaddleWidth) / 2;
+        let breakoutScore = 0;
+        let breakoutLives = 3;
+        let breakoutLevel = 1;
+        let breakoutGameRunning = false;
+        let breakoutRightPressed = false;
+        let breakoutLeftPressed = false;
+
+        const breakoutBrickRowCount = 3;
+        const breakoutBrickColumnCount = 5;
+        const breakoutBrickWidth = 75;
+        const breakoutBrickHeight = 20;
+        const breakoutBrickPadding = 10;
+        const breakoutBrickOffsetTop = 30;
+        const breakoutBrickOffsetLeft = 30;
+
+        let breakoutBricks = [];
+
+        function breakoutInit() {
+            breakoutBallX = breakoutCanvas.width / 2;
+            breakoutBallY = breakoutCanvas.height - 30;
+            breakoutBallDX = 4;
+            breakoutBallDY = -4;
+            breakoutPaddleX = (breakoutCanvas.width - breakoutPaddleWidth) / 2;
+            breakoutScore = 0;
+            breakoutLives = 3;
+            breakoutLevel = 1;
+            
+            breakoutCreateBricks();
+            breakoutUpdateDisplay();
+            breakoutDrawGame();
+        }
+
+        function breakoutCreateBricks() {
+            breakoutBricks = [];
+            for (let c = 0; c < breakoutBrickColumnCount; c++) {
+                breakoutBricks[c] = [];
+                for (let r = 0; r < breakoutBrickRowCount; r++) {
+                    breakoutBricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+        }
+
+        function breakoutUpdateDisplay() {
+            document.getElementById('breakout-score').textContent = breakoutScore;
+            document.getElementById('breakout-lives').textContent = breakoutLives;
+            document.getElementById('breakout-level').textContent = breakoutLevel;
+        }
+
+        function breakoutDrawGame() {
+            breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
+            
+            // Draw bricks
+            for (let c = 0; c < breakoutBrickColumnCount; c++) {
+                for (let r = 0; r < breakoutBrickRowCount; r++) {
+                    if (breakoutBricks[c][r].status === 1) {
+                        const brickX = c * (breakoutBrickWidth + breakoutBrickPadding) + breakoutBrickOffsetLeft;
+                        const brickY = r * (breakoutBrickHeight + breakoutBrickPadding) + breakoutBrickOffsetTop;
+                        breakoutBricks[c][r].x = brickX;
+                        breakoutBricks[c][r].y = brickY;
+                        breakoutCtx.fillStyle = '#ff00ff';
+                        breakoutCtx.fillRect(brickX, brickY, breakoutBrickWidth, breakoutBrickHeight);
+                    }
+                }
+            }
+            
+            // Draw ball
+            breakoutCtx.beginPath();
+            breakoutCtx.arc(breakoutBallX, breakoutBallY, 10, 0, Math.PI * 2);
+            breakoutCtx.fillStyle = '#00ffff';
+            breakoutCtx.fill();
+            breakoutCtx.closePath();
+            
+            // Draw paddle
+            breakoutCtx.fillStyle = '#ff00ff';
+            breakoutCtx.fillRect(breakoutPaddleX, breakoutCanvas.height - 10, breakoutPaddleWidth, 10);
+        }
+
+        function breakoutNewGame() {
+            breakoutInit();
+            breakoutGameRunning = true;
+            document.getElementById('breakout-message').textContent = '';
+            breakoutGameLoop = requestAnimationFrame(breakoutUpdateGame);
+        }
+
+        function breakoutUpdateGame() {
+            if (!breakoutGameRunning) return;
+            
+            // Move paddle
+            if (breakoutRightPressed && breakoutPaddleX < breakoutCanvas.width - breakoutPaddleWidth) {
+                breakoutPaddleX += 7;
+            } else if (breakoutLeftPressed && breakoutPaddleX > 0) {
+                breakoutPaddleX -= 7;
+            }
+            
+            // Move ball
+            breakoutBallX += breakoutBallDX;
+            breakoutBallY += breakoutBallDY;
+            
+            // Wall collision
+            if (breakoutBallX + 10 > breakoutCanvas.width || breakoutBallX - 10 < 0) {
+                breakoutBallDX = -breakoutBallDX;
+            }
+            if (breakoutBallY - 10 < 0) {
+                breakoutBallDY = -breakoutBallDY;
+            } else if (breakoutBallY + 10 > breakoutCanvas.height) {
+                if (breakoutBallX > breakoutPaddleX && breakoutBallX < breakoutPaddleX + breakoutPaddleWidth) {
+                    breakoutBallDY = -breakoutBallDY;
+                } else {
+                    breakoutLives--;
+                    breakoutUpdateDisplay();
+                    if (breakoutLives === 0) {
+                        breakoutGameOver();
+                        return;
+                    } else {
+                        breakoutBallX = breakoutCanvas.width / 2;
+                        breakoutBallY = breakoutCanvas.height - 30;
+                        breakoutBallDX = 4;
+                        breakoutBallDY = -4;
+                        breakoutPaddleX = (breakoutCanvas.width - breakoutPaddleWidth) / 2;
+                    }
+                }
+            }
+            
+            // Brick collision
+            for (let c = 0; c < breakoutBrickColumnCount; c++) {
+                for (let r = 0; r < breakoutBrickRowCount; r++) {
+                    const brick = breakoutBricks[c][r];
+                    if (brick.status === 1) {
+                        if (breakoutBallX > brick.x && breakoutBallX < brick.x + breakoutBrickWidth &&
+                            breakoutBallY > brick.y && breakoutBallY < brick.y + breakoutBrickHeight) {
+                            breakoutBallDY = -breakoutBallDY;
+                            brick.status = 0;
+                            breakoutScore += 10;
+                            breakoutUpdateDisplay();
+                            
+                            // Check if all bricks destroyed
+                            if (breakoutScore === breakoutBrickRowCount * breakoutBrickColumnCount * 10) {
+                                breakoutLevelUp();
+                            }
+                        }
+                    }
+                }
+            }
+            
+            breakoutDrawGame();
+            breakoutGameLoop = requestAnimationFrame(breakoutUpdateGame);
+        }
+
+        function breakoutLevelUp() {
+            breakoutLevel++;
+            breakoutScore = 0;
+            breakoutLives++;
+            breakoutCreateBricks();
+            breakoutBallDX *= 1.2;
+            breakoutBallDY *= 1.2;
+            breakoutUpdateDisplay();
+        }
+
+        function breakoutGameOver() {
+            breakoutGameRunning = false;
+            cancelAnimationFrame(breakoutGameLoop);
+            document.getElementById('breakout-message').textContent = 'GAME OVER! PRESS NEW GAME';
+            document.getElementById('breakout-message').className = 'game-message lose';
+        }
+
+        // Breakout controls
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('breakout-game').style.display === 'block') {
+                if (e.key === 'Right' || e.key === 'ArrowRight') breakoutRightPressed = true;
+                else if (e.key === 'Left' || e.key === 'ArrowLeft') breakoutLeftPressed = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (document.getElementById('breakout-game').style.display === 'block') {
+                if (e.key === 'Right' || e.key === 'ArrowRight') breakoutRightPressed = false;
+                else if (e.key === 'Left' || e.key === 'ArrowLeft') breakoutLeftPressed = false;
+            }
+        });
+
+        // Initialize games
+        hangmanInit();
+        tictactoeInit();
+        memoryInit();
+        snakeInit();
+        rpsInit();
+        simonInit();
+        moleInit();
+        breakoutInit();
+    </script>
+</body>
+</html>
